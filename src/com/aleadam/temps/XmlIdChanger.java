@@ -92,10 +92,14 @@ public class XmlIdChanger {
 
         	while (scanner.hasNextLine()){
         		line = scanner.nextLine();
-        		if (line.contains("0x10") && !line.contains("->")) {
-        			int index = line.indexOf("0x10");
+        		if ((line.contains("0x10") || line.contains("0x7f")) && !line.contains("->")) {
+        			int index = line.indexOf("0x");
         			if (line.length() >= index+9) {
-        				String id = line.substring(index+2, index+9);
+        				String id;
+        				if (line.length() == index+9)
+        					id = line.substring(index+2, index+9);
+        				else
+        					id = line.substring(index+2, index+10);
         				String key = findKeyName (id);
         			    String id2 = table2.get(key).substring(3);
         			    if (id2 == null) {
